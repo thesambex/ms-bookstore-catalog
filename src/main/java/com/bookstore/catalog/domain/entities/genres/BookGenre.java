@@ -4,7 +4,6 @@ import com.bookstore.catalog.domain.entities.books.Book;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.UUID;
 
 @Entity(name = "book_genre")
@@ -21,8 +20,9 @@ public class BookGenre implements Serializable {
     @Column(name = "genre_id", nullable = false, insertable = false, updatable = false)
     private UUID genreId;
 
-    @ManyToMany(mappedBy = "bookGenres")
-    private Collection<Book> books;
+    @ManyToOne
+    @JoinColumn(name = "book_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_book_id"))
+    private Book book;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "genre_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_genre_id"))
@@ -58,12 +58,12 @@ public class BookGenre implements Serializable {
         this.genre = genre;
     }
 
-    public Collection<Book> getBooks() {
-        return books;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBooks(Collection<Book> books) {
-        this.books = books;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
 }

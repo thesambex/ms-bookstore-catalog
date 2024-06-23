@@ -44,12 +44,7 @@ public class Book implements Serializable {
     @JoinColumn(name = "author_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_author_id"))
     private Author author;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "books_genre", schema = "books",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "id"),
-            foreignKey = @ForeignKey(name = "fk_book_id")
-    )
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<BookGenre> bookGenres;
 
     public Book() {
@@ -127,16 +122,8 @@ public class Book implements Serializable {
         return authorId;
     }
 
-    public void setAuthorId(UUID authorId) {
-        this.authorId = authorId;
-    }
-
     public Collection<BookGenre> getBookGenres() {
         return bookGenres;
-    }
-
-    public void setBookGenres(Collection<BookGenre> bookGenres) {
-        this.bookGenres = bookGenres;
     }
 
     public Author getAuthor() {

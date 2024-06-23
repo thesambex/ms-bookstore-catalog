@@ -3,6 +3,7 @@ package com.bookstore.catalog.infra.services;
 import com.bookstore.catalog.application.repository.books.BooksRepository;
 import com.bookstore.catalog.application.repository.books.BooksViewRepository;
 import com.bookstore.catalog.application.repository.genres.BooksGenresRepository;
+import com.bookstore.catalog.application.repository.genres.GenresRepository;
 import com.bookstore.catalog.application.services.BooksService;
 import com.bookstore.catalog.domain.dtos.books.BookDetailsResponse;
 import com.bookstore.catalog.domain.dtos.books.BookResponse;
@@ -12,6 +13,7 @@ import com.bookstore.catalog.domain.entities.author.Author;
 import com.bookstore.catalog.domain.entities.books.Book;
 import com.bookstore.catalog.domain.entities.books.BookView;
 import com.bookstore.catalog.domain.entities.genres.BookGenre;
+import com.bookstore.catalog.domain.entities.genres.Genre;
 import com.bookstore.catalog.domain.exceptions.ConflictException;
 import com.bookstore.catalog.domain.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -30,16 +32,19 @@ public class BooksServiceImpl implements BooksService {
 
     private final BooksRepository booksRepository;
     private final BooksViewRepository booksViewRepository;
+    private final GenresRepository genresRepository;
     private final BooksGenresRepository booksGenresRepository;
 
     @Autowired
     public BooksServiceImpl(
             BooksRepository booksRepository,
             BooksViewRepository booksViewRepository,
+            GenresRepository genresRepository,
             BooksGenresRepository booksGenresRepository
     ) {
         this.booksRepository = booksRepository;
         this.booksViewRepository = booksViewRepository;
+        this.genresRepository = genresRepository;
         this.booksGenresRepository = booksGenresRepository;
     }
 
@@ -67,7 +72,7 @@ public class BooksServiceImpl implements BooksService {
                 book.getIsbn(),
                 book.getPrice(),
                 book.getPublishDate(),
-                book.getAuthorId()
+                author.getId()
         );
 
         return ResponseEntity.created(URI.create("/api/v1/books/" + response.id())).body(response);
@@ -134,6 +139,27 @@ public class BooksServiceImpl implements BooksService {
     public ResponseEntity<Page<BookResponse>> listAll(int pageIndex) {
         Page<BookView> books = booksViewRepository.findAll(PageRequest.of(pageIndex, 10));
         return ResponseEntity.ok(books.map(BookResponse::fromBook));
+    }
+
+    @Override
+    public ResponseEntity<Void> addBookGenre(UUID bookId, UUID genreId) {
+        Book book = booksRepository.findById(bookId).orElse(null);
+        if (book == null) {
+            throw new NotFoundException("Book " + bookId + " not found", "book");
+        }
+
+        Genre genre = genresRepository.findById(genreId).orElse(null);
+        if (genre == null) {
+            throw new NotFoundException("Genre " + genreId + " not found", "genre");
+        }
+
+        BookGenre bookGenre = new BookGenre();
+        bookGenre.setBook(book);
+        bookGenre.setGenre(genre);
+
+        booksGenresRepository.save(bookGenre);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

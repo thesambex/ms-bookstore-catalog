@@ -107,4 +107,23 @@ public class BooksController {
         return booksService.listAll(pageIndex);
     }
 
+    @Operation(operationId = "addBookGenre", summary = "Add book genre", tags = {"Books"},
+            parameters = {
+                    @Parameter(in = ParameterIn.PATH, name = "bookId", description = "Book ID"),
+                    @Parameter(in = ParameterIn.PATH, name = "genreId", description = "Genre ID")
+            },
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Successful operation"),
+                    @ApiResponse(responseCode = "404", description = "Book or Genre not found", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            }
+    )
+    @PostMapping("{bookId}/genres/{genreId}/add")
+    public ResponseEntity<Void> addGenre(
+            @PathVariable("bookId") UUID bookId,
+            @PathVariable("genreId") UUID genreId
+    ) {
+        return booksService.addBookGenre(bookId, genreId);
+    }
+
 }

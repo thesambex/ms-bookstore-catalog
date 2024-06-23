@@ -16,7 +16,7 @@ public record CreateBookRequest(
         String name,
         @Length(max = 2048, message = "max length is 2048")
         String brief,
-        @NotBlank
+        @NotBlank(message = "provide book isbn")
         @Length(min = 13, max = 13, message = "length is 13 characters")
         String isbn,
         @NotNull(message = "provide book price")

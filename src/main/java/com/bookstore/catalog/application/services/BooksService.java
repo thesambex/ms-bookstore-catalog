@@ -19,4 +19,7 @@ public interface BooksService {
     ResponseEntity<BookDetailsResponse> updateBook(UUID id, UpdateBookRequest body);
 
     ResponseEntity<Page<BookResponse>> listAll(int pageIndex);
+
+    ResponseEntity<Void> addBookGenre(UUID bookId, UUID genreId);
+
 }

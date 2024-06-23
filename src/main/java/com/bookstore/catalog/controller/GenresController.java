@@ -90,7 +90,7 @@ public class GenresController {
         return genresService.updateGenre(id, body);
     }
 
-    @Operation(operationId = "listGenres", summary = "List authors", tags = {"Genres"},
+    @Operation(operationId = "listGenres", summary = "List genres", tags = {"Genres"},
             parameters = {
                     @Parameter(in = ParameterIn.QUERY, name = "page", description = "Page index")
             },
