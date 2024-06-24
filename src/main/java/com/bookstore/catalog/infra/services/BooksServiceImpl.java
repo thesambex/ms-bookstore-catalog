@@ -153,11 +153,27 @@ public class BooksServiceImpl implements BooksService {
             throw new NotFoundException("Genre " + genreId + " not found", "genre");
         }
 
+        if (booksGenresRepository.findBookGenreByBookIdAndGenreId(bookId, genreId).isPresent()) {
+            throw new ConflictException("Already exists an genre attached in this book", "genre");
+        }
+
         BookGenre bookGenre = new BookGenre();
         bookGenre.setBook(book);
         bookGenre.setGenre(genre);
 
         booksGenresRepository.save(bookGenre);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> removeBookGenre(UUID bookId, UUID genreId) {
+        BookGenre bookGenre = booksGenresRepository.findBookGenreByBookIdAndGenreId(bookId, genreId).orElse(null);
+        if (bookGenre == null) {
+            throw new NotFoundException("Book genre with bookId " + bookId + " and genreId " + genreId + " not found", "book_genre");
+        }
+
+        booksGenresRepository.delete(bookGenre);
 
         return ResponseEntity.noContent().build();
     }

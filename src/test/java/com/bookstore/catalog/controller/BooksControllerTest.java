@@ -273,4 +273,17 @@ public class BooksControllerTest {
                 .andExpect(status().is2xxSuccessful()).andDo(print());
     }
 
+    @DisplayName("Remove book genre")
+    @Test
+    void testRemoveBookGenre_Should_return_Success() throws Exception {
+        UUID bookId = UUID.randomUUID();
+        UUID genreId = UUID.randomUUID();
+
+        when(booksService.removeBookGenre(bookId, genreId))
+                .thenReturn(ResponseEntity.noContent().build());
+
+        mockMvc.perform(delete("/api/v1/books/" + bookId + "/genres/" + genreId + "/remove"))
+                .andExpect(status().is2xxSuccessful()).andDo(print());
+    }
+
 }

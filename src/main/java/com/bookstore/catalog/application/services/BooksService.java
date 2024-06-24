@@ -22,4 +22,6 @@ public interface BooksService {
 
     ResponseEntity<Void> addBookGenre(UUID bookId, UUID genreId);
 
+    ResponseEntity<Void> removeBookGenre(UUID bookId, UUID genreId);
+
 }

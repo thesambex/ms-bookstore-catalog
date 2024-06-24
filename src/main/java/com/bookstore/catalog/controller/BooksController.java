@@ -126,4 +126,23 @@ public class BooksController {
         return booksService.addBookGenre(bookId, genreId);
     }
 
+    @Operation(operationId = "removeBookGenre", summary = "Remove book genre", tags = {"Books"},
+            parameters = {
+                    @Parameter(in = ParameterIn.PATH, name = "bookId", description = "Book ID"),
+                    @Parameter(in = ParameterIn.PATH, name = "genreId", description = "Genre ID")
+            },
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Successful operation"),
+                    @ApiResponse(responseCode = "404", description = "Book genre not found", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            }
+    )
+    @DeleteMapping("{bookId}/genres/{genreId}/remove")
+    public ResponseEntity<Void> removeGenre(
+            @PathVariable("bookId") UUID bookId,
+            @PathVariable("genreId") UUID genreId
+    ) {
+        return booksService.removeBookGenre(bookId, genreId);
+    }
+
 }
