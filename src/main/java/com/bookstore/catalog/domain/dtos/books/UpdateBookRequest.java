@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Length;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 public record UpdateBookRequest(
         @Length(max = 255, message = "max length is 255 characters")
@@ -16,7 +15,6 @@ public record UpdateBookRequest(
         String isbn,
         @Max(999999999)
         BigDecimal price,
-        LocalDate publishDate,
-        UUID authorId
+        LocalDate publishDate
 ) {
 }
