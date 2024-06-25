@@ -178,4 +178,10 @@ public class BooksServiceImpl implements BooksService {
         return ResponseEntity.noContent().build();
     }
 
+    @Override
+    public ResponseEntity<Page<BookResponse>> search(String query, int pageIndex) {
+        Page<BookView> books = booksViewRepository.search(query, PageRequest.of(pageIndex, 10));
+        return ResponseEntity.ok(books.map(BookResponse::fromBook));
+    }
+
 }

@@ -251,7 +251,7 @@ public class BooksControllerTest {
     @DisplayName("List books")
     @Test
     void testListBooks_Should_return_Success() throws Exception {
-        var books = List.of(new BookResponse(UUID.randomUUID(), "Foo", "Foo of Baa"));
+        var books = List.of(new BookResponse(UUID.randomUUID(), "Foo", new BigDecimal("10.0"), "Foo of Baa"));
 
         when(booksService.listAll(0))
                 .thenReturn(ResponseEntity.ok(new PageImpl<>(books)));
@@ -284,6 +284,21 @@ public class BooksControllerTest {
 
         mockMvc.perform(delete("/api/v1/books/" + bookId + "/genres/" + genreId + "/remove"))
                 .andExpect(status().is2xxSuccessful()).andDo(print());
+    }
+
+    @DisplayName("Search books")
+    @Test
+    void testSearchBooks_Should_return_Success() throws Exception {
+        String query = "The";
+        int pageIndex = 0;
+
+        var books = List.of(new BookResponse(UUID.randomUUID(), "The Hobbit", new BigDecimal("10.0"), "J.R.R. Tolkien"));
+
+        when(booksService.search(query, pageIndex))
+                .thenReturn(ResponseEntity.ok(new PageImpl<>(books)));
+
+        mockMvc.perform(get("/api/v1/books/search?query=" + query + "&page=" + pageIndex))
+                .andExpect(status().isOk()).andDo(print());
     }
 
 }

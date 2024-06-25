@@ -145,4 +145,22 @@ public class BooksController {
         return booksService.removeBookGenre(bookId, genreId);
     }
 
+    @Operation(operationId = "searchBooks", summary = "Search books", tags = {"Books"},
+            parameters = {
+                    @Parameter(in = ParameterIn.QUERY, name = "query", description = "Search query"),
+                    @Parameter(in = ParameterIn.QUERY, name = "page", description = "Page index")
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = Page.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            }
+    )
+    @GetMapping("search")
+    public ResponseEntity<Page<BookResponse>> search(
+            @RequestParam("query") String query,
+            @RequestParam(value = "page", defaultValue = "0") int pageIndex
+    ) {
+        return booksService.search(query, pageIndex);
+    }
+
 }

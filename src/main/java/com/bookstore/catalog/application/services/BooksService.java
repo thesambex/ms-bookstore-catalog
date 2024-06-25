@@ -24,4 +24,6 @@ public interface BooksService {
 
     ResponseEntity<Void> removeBookGenre(UUID bookId, UUID genreId);
 
+    ResponseEntity<Page<BookResponse>> search(String query, int pageIndex);
+
 }
