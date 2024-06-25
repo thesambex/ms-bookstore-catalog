@@ -1,6 +1,6 @@
-package com.bookstore.catalog.application.repository.books;
+package com.bookstore.catalog.application.repositories.books;
 
-import com.bookstore.catalog.application.repository.ReadOnlyRepository;
+import com.bookstore.catalog.application.repositories.ReadOnlyRepository;
 import com.bookstore.catalog.domain.entities.books.BookView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

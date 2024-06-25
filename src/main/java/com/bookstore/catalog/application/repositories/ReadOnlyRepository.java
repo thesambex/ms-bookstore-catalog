@@ -1,4 +1,4 @@
-package com.bookstore.catalog.application.repository;
+package com.bookstore.catalog.application.repositories;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

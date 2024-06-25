@@ -1,4 +1,4 @@
-package com.bookstore.catalog.application.repository;
+package com.bookstore.catalog.application.repositories;
 
 import com.bookstore.catalog.domain.entities.author.Author;
 import org.springframework.data.jpa.repository.JpaRepository;

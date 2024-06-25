@@ -1,9 +1,9 @@
 package com.bookstore.catalog.infra.services;
 
-import com.bookstore.catalog.application.repository.books.BooksRepository;
-import com.bookstore.catalog.application.repository.books.BooksViewRepository;
-import com.bookstore.catalog.application.repository.genres.BooksGenresRepository;
-import com.bookstore.catalog.application.repository.genres.GenresRepository;
+import com.bookstore.catalog.application.repositories.books.BooksRepository;
+import com.bookstore.catalog.application.repositories.books.BooksViewRepository;
+import com.bookstore.catalog.application.repositories.genres.BooksGenresRepository;
+import com.bookstore.catalog.application.repositories.genres.GenresRepository;
 import com.bookstore.catalog.application.services.BooksService;
 import com.bookstore.catalog.domain.dtos.books.BookDetailsResponse;
 import com.bookstore.catalog.domain.dtos.books.BookResponse;

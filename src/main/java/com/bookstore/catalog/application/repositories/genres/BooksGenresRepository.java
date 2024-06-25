@@ -1,4 +1,4 @@
-package com.bookstore.catalog.application.repository.genres;
+package com.bookstore.catalog.application.repositories.genres;
 
 import com.bookstore.catalog.domain.entities.genres.BookGenre;
 import org.springframework.data.jpa.repository.JpaRepository;

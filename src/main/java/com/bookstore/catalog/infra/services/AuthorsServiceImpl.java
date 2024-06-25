@@ -1,6 +1,6 @@
 package com.bookstore.catalog.infra.services;
 
-import com.bookstore.catalog.application.repository.AuthorsRepository;
+import com.bookstore.catalog.application.repositories.AuthorsRepository;
 import com.bookstore.catalog.application.services.AuthorsService;
 import com.bookstore.catalog.domain.dtos.author.CreateAuthorRequest;
 import com.bookstore.catalog.domain.dtos.author.UpdateAuthorRequest;

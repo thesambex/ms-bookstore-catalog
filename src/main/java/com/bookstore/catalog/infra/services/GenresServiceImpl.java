@@ -1,6 +1,6 @@
 package com.bookstore.catalog.infra.services;
 
-import com.bookstore.catalog.application.repository.genres.GenresRepository;
+import com.bookstore.catalog.application.repositories.genres.GenresRepository;
 import com.bookstore.catalog.application.services.GenresService;
 import com.bookstore.catalog.domain.dtos.genre.GenreRequest;
 import com.bookstore.catalog.domain.dtos.genre.GenreResponse;
