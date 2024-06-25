@@ -14,6 +14,8 @@ public interface BooksService {
 
     ResponseEntity<BookDetailsResponse> getBook(UUID id);
 
+    ResponseEntity<BookDetailsResponse> getBookFromIsbn(String isbn);
+
     ResponseEntity<Void> deleteBook(UUID id);
 
     ResponseEntity<BookDetailsResponse> updateBook(UUID id, UpdateBookRequest body);

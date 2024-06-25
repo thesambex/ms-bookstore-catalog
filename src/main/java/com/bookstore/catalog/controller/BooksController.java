@@ -58,6 +58,21 @@ public class BooksController {
         return booksService.getBook(id);
     }
 
+    @Operation(operationId = "findBookByIsbn", summary = "Find book by ISBN", tags = {"Books"},
+            parameters = {
+                    @Parameter(in = ParameterIn.QUERY, name = "q", description = "Book ISBN")
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = BookDetailsResponse.class))),
+                    @ApiResponse(responseCode = "404", description = "Book not found", content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+            }
+    )
+    @GetMapping("find/isbn")
+    public ResponseEntity<BookDetailsResponse> getBookIsbn(@RequestParam("q") String isbn) {
+        return booksService.getBookFromIsbn(isbn);
+    }
+
     @Operation(operationId = "deleteBookById", summary = "Delete book by ID", tags = {"Books"},
             parameters = {
                     @Parameter(in = ParameterIn.PATH, name = "id", description = "Book id")

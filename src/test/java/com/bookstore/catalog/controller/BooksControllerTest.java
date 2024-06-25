@@ -156,6 +156,52 @@ public class BooksControllerTest {
                 .andExpect(status().isNotFound()).andDo(print());
     }
 
+    @DisplayName("Find books with existing ISBN")
+    @Test
+    void testFindBook_When_Existing_ISBN_Should_return_Success() throws Exception {
+        String isbn = "9788595084742";
+
+        BookDetailsResponse book = new BookDetailsResponse(
+                UUID.randomUUID(),
+                "Foo",
+                "Bar",
+                "1234567891234",
+                new BigDecimal("12.90"),
+                LocalDate.now(),
+                new AuthorResponse(UUID.randomUUID(), "Foo of Silva"),
+                Set.of(new GenreResponse(UUID.randomUUID(), "Fantasy"))
+        );
+
+        when(booksService.getBookFromIsbn(isbn))
+                .thenReturn(ResponseEntity.ok(book));
+
+        var response = mockMvc.perform(get("/api/v1/books/find/isbn?q=" + isbn))
+                .andExpect(status().isOk()).andDo(print()).andReturn().getResponse();
+
+        BookDetailsResponse payload = objectMapper.readValue(response.getContentAsString(), BookDetailsResponse.class);
+
+        Assertions.assertNotNull(payload);
+        Assertions.assertNotNull(payload.id());
+        Assertions.assertEquals(book.name(), payload.name());
+        Assertions.assertEquals(book.brief(), payload.brief());
+        Assertions.assertEquals(book.isbn(), payload.isbn());
+        Assertions.assertEquals(book.price(), payload.price());
+        Assertions.assertEquals(book.author(), payload.author());
+        Assertions.assertEquals(book.genres(), payload.genres());
+    }
+
+    @DisplayName("Find books with not existing ISBN")
+    @Test
+    void testFindBook_When_NotExisting_ISBN_Should_return_NotFound() throws Exception {
+        String isbn = "";
+
+        when(booksService.getBookFromIsbn(isbn))
+                .thenReturn(ResponseEntity.notFound().build());
+
+        mockMvc.perform(get("/api/v1/books/find/isbn?q=" + isbn))
+                .andExpect(status().isNotFound()).andDo(print());
+    }
+
     @DisplayName("Delete book with existing ID")
     @Test
     void testDeleteBook_When_Existing_ID_Should_return_Success() throws Exception {

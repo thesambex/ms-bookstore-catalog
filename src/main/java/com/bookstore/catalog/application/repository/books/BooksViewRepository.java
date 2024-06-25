@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -17,4 +18,6 @@ public interface BooksViewRepository extends ReadOnlyRepository<BookView, UUID> 
             countQuery = "SELECT COUNT(b) FROM book_view b WHERE b.name LIKE %:query%"
     )
     Page<BookView> search(@Param("query") String query, Pageable pageable);
+
+    Optional<BookView> findBookViewByIsbn(String isbn);
 }

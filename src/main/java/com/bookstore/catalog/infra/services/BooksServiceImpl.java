@@ -93,6 +93,20 @@ public class BooksServiceImpl implements BooksService {
     }
 
     @Override
+    public ResponseEntity<BookDetailsResponse> getBookFromIsbn(String isbn) {
+        BookView book = booksViewRepository.findBookViewByIsbn(isbn).orElse(null);
+        if (book == null) {
+            throw new NotFoundException("Book with isbn " + isbn + " not found");
+        }
+
+        var genres = booksGenresRepository.findByBookId(book.getId()).stream()
+                .map(BookGenre::getGenre)
+                .collect(Collectors.toSet());
+
+        return ResponseEntity.ok(BookDetailsResponse.fromBook(book, genres));
+    }
+
+    @Override
     public ResponseEntity<Void> deleteBook(UUID id) {
         Book book = booksRepository.findById(id).orElse(null);
         if (book == null) {
