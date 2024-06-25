@@ -11,7 +11,7 @@ public class OpenApiConfiguration {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
-                .info(new Info().title("Books catalog microservice").version("v0.0.1"));
+                .info(new Info().title("Bookstore catalog microservice").version("v0.0.1"));
     }
 
 }

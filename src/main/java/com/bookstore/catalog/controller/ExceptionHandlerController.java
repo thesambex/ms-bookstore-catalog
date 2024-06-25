@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestControllerAdvice
@@ -23,19 +24,19 @@ public class ExceptionHandlerController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralError(Exception e, WebRequest request) {
         logger.error("Error: {}", e.getMessage(), e);
-        var error = new ErrorResponse("Server Error", request.getDescription(false), null, new Date());
+        var error = new ErrorResponse("Server Error", request.getDescription(false), null, LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException e, WebRequest request) {
-        var error = new ErrorResponse(e.getMessage(), request.getDescription(false), e.getExtra(), new Date());
+        var error = new ErrorResponse(e.getMessage(), request.getDescription(false), e.getExtra(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<ErrorResponse> handleConflictException(ConflictException e, WebRequest request) {
-        var error = new ErrorResponse(e.getMessage(), request.getDescription(false), e.getExtra(), new Date());
+        var error = new ErrorResponse(e.getMessage(), request.getDescription(false), e.getExtra(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
@@ -49,9 +50,6 @@ public class ExceptionHandlerController {
         });
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-
-    private record InvalidParams(String cause, String attr) {
     }
 
 }
