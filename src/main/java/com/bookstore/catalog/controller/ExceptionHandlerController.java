@@ -23,7 +23,7 @@ public class ExceptionHandlerController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralError(Exception e, WebRequest request) {
         logger.error("Error: {}", e.getMessage(), e);
-        var error = new ErrorResponse(e.getMessage(), request.getDescription(false), null, new Date());
+        var error = new ErrorResponse("Server Error", request.getDescription(false), null, new Date());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
