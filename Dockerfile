@@ -7,7 +7,9 @@ RUN mvn package
 
 FROM eclipse-temurin:17-jdk-alpine
 
-COPY --from=build /build/target/*.jar /book-catalog.jar
+WORKDIR /app
+
+COPY --from=build /build/target/*.jar /app/book-catalog.jar
 
 EXPOSE 8000
 
