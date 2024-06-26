@@ -19,5 +19,5 @@ public interface BooksViewRepository extends ReadOnlyRepository<BookView, UUID> 
     )
     Page<BookView> search(@Param("query") String query, Pageable pageable);
 
-    Optional<BookView> findBookViewByIsbn(String isbn);
+    Optional<BookView> findByIsbn(String isbn);
 }

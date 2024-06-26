@@ -53,7 +53,7 @@ public class BooksServiceImpl implements BooksService {
         Book book = new Book();
         BeanUtils.copyProperties(body, book);
 
-        if (booksRepository.findBookByIsbn(body.isbn()).isPresent()) {
+        if (booksRepository.findByIsbn(body.isbn()).isPresent()) {
             throw new ConflictException("Already exists a book with this isbn", "isbn");
         }
 
@@ -94,7 +94,7 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     public ResponseEntity<BookDetailsResponse> getBookFromIsbn(String isbn) {
-        BookView book = booksViewRepository.findBookViewByIsbn(isbn).orElse(null);
+        BookView book = booksViewRepository.findByIsbn(isbn).orElse(null);
         if (book == null) {
             throw new NotFoundException("Book with isbn " + isbn + " not found");
         }
@@ -132,7 +132,7 @@ public class BooksServiceImpl implements BooksService {
             book.setBrief(body.brief());
 
         if (!body.isbn().isBlank() && !body.isbn().equals(book.getIsbn())) {
-            if (booksRepository.findBookByIsbn(body.isbn()).isPresent()) {
+            if (booksRepository.findByIsbn(body.isbn()).isPresent()) {
                 throw new ConflictException("Already exists a book with this isbn", "isbn");
             }
             book.setIsbn(body.isbn());
@@ -167,7 +167,7 @@ public class BooksServiceImpl implements BooksService {
             throw new NotFoundException("Genre " + genreId + " not found", "genre");
         }
 
-        if (booksGenresRepository.findBookGenreByBookIdAndGenreId(bookId, genreId).isPresent()) {
+        if (booksGenresRepository.findByBookIdAndGenreId(bookId, genreId).isPresent()) {
             throw new ConflictException("Already exists an genre attached in this book", "genre");
         }
 
@@ -182,7 +182,7 @@ public class BooksServiceImpl implements BooksService {
 
     @Override
     public ResponseEntity<Void> removeBookGenre(UUID bookId, UUID genreId) {
-        BookGenre bookGenre = booksGenresRepository.findBookGenreByBookIdAndGenreId(bookId, genreId).orElse(null);
+        BookGenre bookGenre = booksGenresRepository.findByBookIdAndGenreId(bookId, genreId).orElse(null);
         if (bookGenre == null) {
             throw new NotFoundException("Book genre with bookId " + bookId + " and genreId " + genreId + " not found", "book_genre");
         }

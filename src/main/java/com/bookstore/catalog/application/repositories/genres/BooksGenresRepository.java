@@ -12,5 +12,5 @@ import java.util.UUID;
 public interface BooksGenresRepository extends JpaRepository<BookGenre, UUID> {
     List<BookGenre> findByBookId(UUID bookId);
 
-    Optional<BookGenre> findBookGenreByBookIdAndGenreId(UUID bookId, UUID genreId);
+    Optional<BookGenre> findByBookIdAndGenreId(UUID bookId, UUID genreId);
 }
