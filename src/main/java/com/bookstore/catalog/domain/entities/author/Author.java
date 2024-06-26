@@ -22,7 +22,7 @@ public class Author implements Serializable {
     private String biography;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
-    private Collection<Book> book;
+    private Collection<Book> books;
 
     public Author() {
 

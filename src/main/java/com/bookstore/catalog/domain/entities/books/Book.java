@@ -51,7 +51,7 @@ public class Book implements Serializable {
 
     }
 
-    public Book(UUID id, String name, String brief, String photoKey, String isbn, BigDecimal price, LocalDate publishDate, UUID authorId) {
+    public Book(UUID id, String name, String brief, String photoKey, String isbn, BigDecimal price, LocalDate publishDate) {
         this.id = id;
         this.name = name;
         this.brief = brief;
@@ -59,7 +59,6 @@ public class Book implements Serializable {
         this.isbn = isbn;
         this.price = price;
         this.publishDate = publishDate;
-        this.authorId = authorId;
     }
 
     public UUID getId() {
