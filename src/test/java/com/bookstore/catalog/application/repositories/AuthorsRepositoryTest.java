@@ -76,7 +76,7 @@ public class AuthorsRepositoryTest {
         authorsRepository.save(new Author(null, "Foo", "Author biography"));
         authorsRepository.save(new Author(null, "J.R.R. Tolkien", "The lord of rings"));
 
-        Page<Author> authors = authorsRepository.findAll(PageRequest.of(1, 10));
+        Page<Author> authors = authorsRepository.findAll(PageRequest.of(0, 10));
 
         Assertions.assertNotNull(authors);
         Assertions.assertEquals(2, authors.getTotalElements());

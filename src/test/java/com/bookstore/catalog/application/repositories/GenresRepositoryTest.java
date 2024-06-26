@@ -73,7 +73,7 @@ public class GenresRepositoryTest {
         genresRepository.save(new Genre(null, "Fantasy"));
         genresRepository.save(new Genre(null, "Adventure"));
 
-        Page<Genre> genres = genresRepository.findAll(PageRequest.of(1, 10));
+        Page<Genre> genres = genresRepository.findAll(PageRequest.of(0, 10));
 
         Assertions.assertNotNull(genres);
         Assertions.assertEquals(2, genres.getTotalElements());
