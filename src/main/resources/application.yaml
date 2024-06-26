@@ -10,8 +10,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-flyway:
-  enabled: true
+  flyway:
+    enabled: true
 eureka:
   client:
     service-url:
