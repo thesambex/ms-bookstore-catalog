@@ -21,7 +21,7 @@ public class GenresRepositoryTest {
 
     @DisplayName("Save genre")
     @Test
-    void testGivenGenreObject_WhenSave_then_return_SavedGenre() {
+    void testGivenGenreObject_WhenSave_Should_return_SavedGenre() {
         Genre genre = new Genre(null, "Fantasy");
 
         Genre savedGenre = genresRepository.save(genre);
